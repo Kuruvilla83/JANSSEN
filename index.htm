@@ -1,0 +1,133 @@
+<?php
+//error_reporting(E_ALL);
+//echo ($_POST['uid_txt']);
+$errorMessage = '';
+if (isset($_POST['uid_txt']) && isset($_POST['pass_txt'])) 
+{
+	include("db_open.php");
+	include("functions/functions.php");
+
+//////////////////////////////////////////USER VALIDATION\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	$uid = $_POST['uid_txt'];
+	$pass = $_POST['pass_txt'];
+	//echo $uid;
+	$user_valid = "SELECT * FROM user_tbl where usr_id='$uid' and usr_pwd=md5('$pass')";
+echo $user_valid;
+	$result = mysql_query($user_valid) or die('Query failed. ' . mysql_error()); 
+	
+	if (mysql_num_rows($result) == 1) 
+	{
+		$user_array=mysql_fetch_array($result);
+		if ($user_array['usr_status']!=0)
+		{
+		$usr_role =  $user_array['usr_role'];
+		$usr_title =$user_array['usr_title'];
+		$usr_supid=$user_array['usr_supid'];
+		//echo $usr_title;
+		//echo $usr_role;
+		//exit;
+		
+		$empid = $user_array['empid'];
+		setcookie("db_is_logged_in", true); 
+		setcookie("C_USER_ID", $uid);
+		setcookie("C_USER_PVLG", $usr_role);
+		setcookie("C_USER_TITLE", $usr_title);
+		setcookie("C_USER_SUPID", $usr_supid); 
+		
+		setcookie("C_EMPID", $empid);
+
+//////////////////////////////// INSERT LOGIN TIME ////////////////////////////////
+		$time_now=date("Y-m-d H:i:s",strtotime("now"));
+		
+		mysql_query ("UPDATE user_tbl set usr_logintime='$time_now' where usr_id='$uid'");
+
+		
+
+//////////////////////////////// FIRST TIME USER ////////////////////////////////
+/*
+		$get_user_data = mysql_query("SELECT count(*) FROM empinfo_tbl where empid=$empid");
+		$usr_no=mysql_fetch_row($get_user_data);
+
+		if ($usr_no[0]==0)
+		{ 
+			header('Location: empinfo_edit.php');
+			exit();
+		}*/
+		header('Location: main_screen.php');
+		}
+		else
+		{
+			$errorMessage="User Disabled. Contact your supervisor or Administrator";
+		}
+	}
+	else 
+	{
+		$errorMessage = 'Sorry, wrong user id / password';
+	}
+}
+
+?>
+
+<HTML>
+	<HEAD>
+		<title>Welcome to Novatium</title>
+        <style>
+body {
+	text-align:center;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color: #333333;
+	background-image:url(./images/bg_body.gif);
+	background-repeat:repeat-x;
+	background-color:#E1E1D4;
+}
+</style>
+	</HEAD>
+
+	<body MS_POSITIONING="GridLayout" leftMargin="0" topMargin="0" rightMargin="0">
+	<br>
+	<br>
+	<br>
+		<form action="index.htm" method="POST" name="login_frm" id="login_frm" onSubmit="return check()">
+		<?
+if ($errorMessage != '') {
+?>
+<!--<p align="center"><strong><font color="#990000"><? //echo $errorMessage; ?></font></strong></p>-->
+<?
+}
+?>
+
+			<table cellpadding="0" cellspacing="0" align="center" border="0">
+				<TR>
+				 
+					<TD style="HEIGHT: 415px" vAlign="middle" align="center">&nbsp;
+						<span id="LblMsg" style="color:Red;font-family:Arial;font-size:X-Small;font-weight:bold;"></span>
+						<TABLE id="Table2" style="WIDTH: 304px; HEIGHT: 152px" cellSpacing="1" cellPadding="1"
+							width="304" align="center" border="0">
+							<TR>
+								<TD title="login" style="FONT-SIZE: x-small; FONT-FAMILY: Arial; HEIGHT: 28px" vAlign="middle"
+									align="center" background="Images/logonbar.gif" colSpan="2" rowSpan="1">Login</TD>
+							</TR>
+
+							<TR>
+								<TD style="WIDTH: 112px; HEIGHT: 21px"><span id="Label1" style="font-family:Arial;font-size:X-Small;">Login Id</span></TD>
+								<TD style="HEIGHT: 21px"><input name="uid_txt" type="text" id="uid_txt" tabindex="1" size="15" maxlength="11" class="textboxes1"></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 112px; HEIGHT: 26px"><span id="Label2" style="font-family:Arial;font-size:X-Small;">Password</span></TD>
+								<TD style="HEIGHT: 26px"><input name="pass_txt" type="password" id="pass_txt" tabindex="2" size="15" maxlength="10" class="textboxes1">
+                  <input type="submit" value="Go" name="submit" class="textboxes1"> </TD>
+							</TR>
+							
+						</TABLE>
+					</TD>
+
+				</TR>
+				<TR>
+					<TD></TD>
+				</TR>
+			</table>
+		</form>
+	</body>
+</HTML>
+

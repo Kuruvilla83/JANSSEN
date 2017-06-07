@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+#wrapper {
+	width: 96%;
+	/*margin: 4em auto 0 auto;*/
+	background: color: #000;
+}
+.navbar-brand {
+  display: inline-block;
+  float: none;
+  font-size: 18px;
+  height: 60%;
+  padding: 0;
+  vertical-align: middle;
+}
+.header_jaac {
+	font-family:;
+	color: red;
+	font-size:36px;
+}
+.font-face {
+  font-family: 'OpenSans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url("//themes.googleusercontent.com/static/fonts/opensans/v6/u-WUoqrET9fUeobQW7jkRT8E0i7KZn-EPnyo3HZu7kw.woff") format('off');
+}
+
+.btn-toolbar .btn{
+    margin-right: 5px;
+}
+.btn-toolbar .btn:last-child{
+    margin-right: 0;
+}
+/* Set the fixed height of the footer here */
+#footer {
+  height: 30px;
+  background-image: linear-gradient(left, #1c75bc 0%, #31598a 100%) / Height 94px / 100% Width;
+	margin: 0;
+  padding: 0;
+}
+
+.footer_bottom {
+  margin-top: 20px;
+  background-color: #31598a;
+  margin: 0;
+  padding: 0;
+  /*background-image: #FFFFFF;*/
+}
+.footer p {
+	margin: 0 0;
+	padding: 20px 0 0 200px;
+}
+

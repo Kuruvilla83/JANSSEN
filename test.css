@@ -1,0 +1,51 @@
+body{
+	margin-top: 25px;
+background-color: #ADD8E6;
+/* 	
+   background-image: url("bedge_grunge.png"); 
+	background-repeat: no-repeat; */
+	height: 300px;
+	width: 100%;
+
+}
+.container{
+	width: 1250px;
+}
+.bodyContainer{
+	background-image: url("72-Golden-Gate.jpg");
+	background-repeat: no-repeat;
+	margin-left: 300px;
+	height: 300px;
+	width: 100%;
+}
+
+.matt-tab {
+
+	color: red;
+	background-image: url("bedge_grunge.png");
+}
+
+.matt-tab active{
+	color:black;
+	
+}
+
+.matt-jumbo {
+ color: white;
+ background-color: black;
+
+}
+
+.tab-pane{
+	background-image: url("bedge_grunge.png");
+	
+}
+
+.well-sm  { 
+	border: 5px black solid;
+}
+
+.matt-container {
+	
+	background-color: #ADD8E6; 
+} 
